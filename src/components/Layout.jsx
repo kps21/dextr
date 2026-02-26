@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
+import Footer from "./Footer";
 
 function Layout({ children }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,34 +23,32 @@ function Layout({ children }) {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {/* --- DESKTOP SIDEBAR (Visible only on md+) --- */}
-      <aside className="hidden md:flex flex-col w-64 bg-emerald-700 dark:bg-gray-800 text-white p-6 sticky top-0 h-screen shadow-xl">
-        <div className="flex items-center gap-2 mb-10">
-          <span className="text-3xl">📈</span>
-          <h1 className="text-xl font-bold tracking-tight">StockPro</h1>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      <header className="hidden md:flex items-center justify-between px-10 py-4 bg-emerald-700 dark:bg-gray-800 text-white shadow-md sticky top-0 z-40">
+        <div className="flex items-center gap-2">
+          <span className="text-2xl">📈</span>
+          <h1 className="text-xl font-bold">StockPro</h1>
         </div>
-        <nav className="flex flex-col gap-2 flex-1">
+
+        <nav className="flex items-center gap-6">
           {menu.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-3 p-3 rounded-xl transition-all ${
+              className={`px-4 py-2 rounded-lg transition ${
                 isActive(item.path)
-                  ? "bg-white/20 font-bold"
-                  : "hover:bg-white/10 opacity-80"
+                  ? "bg-white/20 font-semibold"
+                  : "hover:bg-white/10 opacity-90"
               }`}
             >
-              <span>{item.icon}</span> {item.name}
+              {item.name}
             </Link>
           ))}
         </nav>
-        <div className="pt-4 border-t border-white/10">
-          <ThemeToggle />
-        </div>
-      </aside>
 
-      {/* --- MOBILE HEADER (Visible only on small screens) --- */}
+        <ThemeToggle />
+      </header>
+
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-emerald-700 dark:bg-gray-800 text-white flex items-center justify-between px-4 z-40 shadow-md">
         <div className="flex items-center gap-2">
           <span className="text-2xl">📈</span>
@@ -63,7 +62,6 @@ function Layout({ children }) {
         </button>
       </div>
 
-      {/* --- MOBILE DRAWER OVERLAY --- */}
       <div
         className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 md:hidden ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible"
@@ -108,8 +106,8 @@ function Layout({ children }) {
         </div>
       </div>
 
-      {/* --- MAIN CONTENT --- */}
-      <main className="flex-1 ">{children}</main>
+      <main className="pt-16 md:pt-6 px-4 md:px-10">{children}</main>
+      <Footer />
     </div>
   );
 }

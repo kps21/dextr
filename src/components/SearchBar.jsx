@@ -18,7 +18,7 @@ function SearchBar() {
   };
 
   return (
-    <div className="relative pt-5 mb-6">
+    <div className="relative  mb-6">
       <input
         value={query}
         onChange={(e) => handleSearch(e.target.value)}
@@ -30,13 +30,13 @@ function SearchBar() {
         <div
           className="absolute w-full bg-emerald-800 hover:bg-emerald-700 
            text-white 
-           dark:bg-emerald-500 dark:hover:bg-emerald-800 shadow rounded mt-1 z-10"
+           dark:bg-gray-500 dark:hover:bg-gray-600 shadow rounded mt-1 z-10"
         >
           {results.map((item) => (
             <Link
               key={item.symbol}
               to={`/stock/${item.symbol}`}
-              className="block p-2 hover:bg-gray-200"
+              className="block p-2 hover:bg-emerald-600 dark:hover:bg-gray-500"
               onClick={() => setResults([])}
             >
               {item.symbol} - {item.description}
