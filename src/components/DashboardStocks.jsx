@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getQuote } from "../services/finnhubService";
-import Chart from "react-apexcharts";
 
 function DashboardStocks() {
   const { items } = useSelector((state) => state.portfolio);
