@@ -16,7 +16,7 @@ function Watchlist() {
   }
 
   return (
-    <div className="text-gray-900 dark:text-gray-100">
+    <div className="text-gray-900 p-2 dark:text-gray-100">
       <h1 className="text-2xl font-bold mb-4">Watchlist</h1>
 
       {items.map((symbol) => (

@@ -18,7 +18,7 @@ function SearchBar() {
   };
 
   return (
-    <div className="relative mb-6">
+    <div className="relative pt-5 mb-6">
       <input
         value={query}
         onChange={(e) => handleSearch(e.target.value)}

@@ -109,7 +109,7 @@ function Layout({ children }) {
       </div>
 
       {/* --- MAIN CONTENT --- */}
-      <main className="flex-1 p-4 md:p-10 pt-20 md:pt-10">{children}</main>
+      <main className="flex-1 ">{children}</main>
     </div>
   );
 }
