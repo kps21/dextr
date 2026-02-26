@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+# Stock Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A responsive Stock Dashboard web application built using **React, Redux Toolkit, and Tailwind CSS**.  
+This application allows users to search stocks, manage a portfolio and read market news using live financial APIs.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+# Features
 
-### `npm start`
+## Stock Search & Details
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Search stocks by symbol
+- Fetch real-time stock quotes
+- View detailed stock information
+- candlestick chart
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 💼 Portfolio Tracker
 
-### `npm test`
+- Add stocks with quantity and buy price
+- Remove stocks from portfolio
+- Live price updates from API
+- Desktop table layout
+- Mobile card layout
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Watchlist
 
-### `npm run build`
+- Add stocks to watchlist
+- Remove stocks
+- Clean and minimal UI
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Market News
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Fetches latest financial news
+- Handles empty API responses
+- Fallback to mock data (for free-tier API limitation)
+- Responsive news cards
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Dark / Light Mode
 
-### `npm run eject`
+- Toggle theme button
+- Fully theme-based UI
+- Tailwind CSS dark mode support
+- Charts unaffected by theme change
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# API Provider Details
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Organization: Finnhub  
+Website: https://finnhub.io  
+Used For:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Live stock quotes
+- Historical candle data
+- Company news
+- General market news
