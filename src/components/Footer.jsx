@@ -196,11 +196,9 @@ function Footer() {
 
   return (
     <footer className="relative mt-20 transition-all duration-300">
-      {/* Decorative Blur Background */}
       <div className="absolute inset-0 bg-gray-50/50 dark:bg-[#0a0f1a]/80 backdrop-blur-3xl -z-10" />
 
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* --- CATEGORY TABS --- */}
         <div className="flex overflow-x-auto no-scrollbar gap-8 border-b border-gray-200 dark:border-white/5 pb-4 mb-8">
           {Object.keys(CATEGORIES_DATA).map((cat) => (
             <button
@@ -220,7 +218,6 @@ function Footer() {
           ))}
         </div>
 
-        {/* --- LINKS GRID --- */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-y-4 gap-x-12 min-h-[200px]">
           {currentLinks.map((item, idx) => (
             <div
@@ -236,11 +233,9 @@ function Footer() {
         </div>
       </div>
 
-      {/* --- BOTTOM LEGAL SECTION --- */}
       <div className="bg-white/40 dark:bg-black/20 backdrop-blur-md border-t border-gray-200 dark:border-white/5 py-12">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-8">
-            {/* Logo & Copyright */}
             <div className="text-center lg:text-left">
               <div className="font-black text-2xl tracking-tighter text-gray-900 dark:text-white mb-2">
                 Stock<span className="text-emerald-500">Pro</span>
@@ -254,7 +249,7 @@ function Footer() {
               </p>
             </div>
 
-            {/* Legal Links */}
+            {/* FIXED SECTION: Using spans/buttons instead of anchor tags with # */}
             <div className="flex flex-wrap justify-center gap-y-3 gap-x-6 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">
               {[
                 "NSE",
@@ -264,17 +259,16 @@ function Footer() {
                 "Terms & Conditions",
                 "Disclosures",
               ].map((link) => (
-                <a
+                <button
                   key={link}
-                  href="#"
-                  className="hover:text-emerald-500 transition-colors duration-300 border-b border-transparent hover:border-emerald-500/30 pb-1"
+                  type="button"
+                  className="hover:text-emerald-500 transition-colors duration-300 border-b border-transparent hover:border-emerald-500/30 pb-1 cursor-pointer outline-none"
                 >
                   {link}
-                </a>
+                </button>
               ))}
             </div>
 
-            {/* Social / Certifications (Optional Placeholder) */}
             <div className="flex gap-4 opacity-50 grayscale hover:grayscale-0 transition-all">
               <span className="px-3 py-1 rounded border border-gray-400 dark:border-white/10 text-[9px] font-bold dark:text-white">
                 SEBI REGISTERED
