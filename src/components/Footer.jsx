@@ -192,52 +192,70 @@ const CATEGORIES_DATA = {
 
 function Footer() {
   const [activeCategory, setActiveCategory] = useState("Share Market");
-
   const currentLinks = CATEGORIES_DATA[activeCategory] || [];
 
   return (
-    <footer className="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 mt-16 transition-all duration-300 border-t border-gray-200 dark:border-gray-800">
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex overflow-x-auto no-scrollbar md:flex-wrap gap-6 border-b border-gray-300 dark:border-gray-700 pb-4 mb-2 text-sm font-medium">
+    <footer className="relative mt-20 transition-all duration-300">
+      {/* Decorative Blur Background */}
+      <div className="absolute inset-0 bg-gray-50/50 dark:bg-[#0a0f1a]/80 backdrop-blur-3xl -z-10" />
+
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        {/* --- CATEGORY TABS --- */}
+        <div className="flex overflow-x-auto no-scrollbar gap-8 border-b border-gray-200 dark:border-white/5 pb-4 mb-8">
           {Object.keys(CATEGORIES_DATA).map((cat) => (
-            <span
+            <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`cursor-pointer transition-all duration-200 whitespace-nowrap ${
+              className={`text-sm font-bold transition-all duration-300 whitespace-nowrap relative pb-4 ${
                 activeCategory === cat
-                  ? "text-emerald-600 border-b-2 border-emerald-600 pb-2"
-                  : "hover:text-emerald-500 text-gray-500 dark:text-gray-400"
+                  ? "text-emerald-500"
+                  : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
               }`}
             >
               {cat}
-            </span>
+              {activeCategory === cat && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-full shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+              )}
+            </button>
           ))}
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-y-1 gap-x-8 text-sm ">
+        {/* --- LINKS GRID --- */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-y-4 gap-x-12 min-h-[200px]">
           {currentLinks.map((item, idx) => (
             <div
               key={idx}
-              className="hover:text-emerald-500 cursor-pointer transition-colors duration-150 py-1 opacity-85 hover:opacity-100"
+              className="group flex items-center gap-2 cursor-pointer py-1"
             >
-              {item}
+              <div className="w-1 h-1 rounded-full bg-emerald-500/0 group-hover:bg-emerald-500 transition-all duration-300" />
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-400 group-hover:text-emerald-500 transition-colors duration-200">
+                {item}
+              </span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Bottom Legal Bar */}
-      <div className="border-t border-gray-300 dark:border-gray-700 py-8 bg-white/50 dark:bg-black/20">
+      {/* --- BOTTOM LEGAL SECTION --- */}
+      <div className="bg-white/40 dark:bg-black/20 backdrop-blur-md border-t border-gray-200 dark:border-white/5 py-12">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="font-semibold text-lg tracking-tight">
-              Stock<span className="text-emerald-600">Pro</span>
-              <span className="block text-xs font-normal text-gray-500">
-                © 2016–2026. All rights reserved.
-              </span>
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-8">
+            {/* Logo & Copyright */}
+            <div className="text-center lg:text-left">
+              <div className="font-black text-2xl tracking-tighter text-gray-900 dark:text-white mb-2">
+                Stock<span className="text-emerald-500">Pro</span>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 max-w-sm leading-relaxed font-medium">
+                Master the markets with real-time data and analytics. Built for
+                the next generation of investors.
+                <span className="block mt-1 font-bold opacity-60">
+                  © 2016–2026. All rights reserved.
+                </span>
+              </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4 text-xs font-medium">
+            {/* Legal Links */}
+            <div className="flex flex-wrap justify-center gap-y-3 gap-x-6 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">
               {[
                 "NSE",
                 "BSE",
@@ -245,16 +263,22 @@ function Footer() {
                 "Privacy Policy",
                 "Terms & Conditions",
                 "Disclosures",
-              ].map((link, i, arr) => (
-                <div key={link} className="flex items-center gap-4">
-                  <span className="cursor-pointer hover:text-emerald-500 transition-colors uppercase">
-                    {link}
-                  </span>
-                  {i !== arr.length - 1 && (
-                    <span className="text-gray-400 dark:text-gray-600">|</span>
-                  )}
-                </div>
+              ].map((link) => (
+                <a
+                  key={link}
+                  href="#"
+                  className="hover:text-emerald-500 transition-colors duration-300 border-b border-transparent hover:border-emerald-500/30 pb-1"
+                >
+                  {link}
+                </a>
               ))}
+            </div>
+
+            {/* Social / Certifications (Optional Placeholder) */}
+            <div className="flex gap-4 opacity-50 grayscale hover:grayscale-0 transition-all">
+              <span className="px-3 py-1 rounded border border-gray-400 dark:border-white/10 text-[9px] font-bold dark:text-white">
+                SEBI REGISTERED
+              </span>
             </div>
           </div>
         </div>

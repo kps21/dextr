@@ -4,34 +4,33 @@ import { getQuote } from "../services/finnhubService";
 
 function DashboardStocks() {
   const { items } = useSelector((state) => state.portfolio);
-
   const [stockData, setStockData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = [];
-
-      for (let stock of items) {
-        try {
-          const quote = await getQuote(stock.symbol);
-
-          if (quote) {
-            data.push({
-              symbol: stock.symbol,
-              price: quote.c,
-              change: quote.d,
-              percent: quote.dp,
-              high: quote.h,
-              low: quote.l,
-              volume: quote.v,
-            });
+      // Using Promise.all for faster concurrent fetching
+      const results = await Promise.all(
+        items.map(async (stock) => {
+          try {
+            const quote = await getQuote(stock.symbol);
+            return quote
+              ? {
+                  symbol: stock.symbol,
+                  price: quote.c,
+                  change: quote.d,
+                  percent: quote.dp,
+                  high: quote.h,
+                  low: quote.l,
+                  volume: quote.v,
+                }
+              : null;
+          } catch (err) {
+            console.error(err);
+            return null;
           }
-        } catch (err) {
-          console.log(err);
-        }
-      }
-
-      setStockData(data);
+        }),
+      );
+      setStockData(results.filter(Boolean));
     };
 
     if (items.length > 0) fetchData();
@@ -39,71 +38,82 @@ function DashboardStocks() {
 
   if (items.length === 0)
     return (
-      <p className="text-gray-500 dark:text-gray-400">No stocks available.</p>
+      <div className="p-8 text-center bg-white/10 backdrop-blur-md rounded-2xl border border-white/10">
+        <p className="text-gray-500 dark:text-gray-400">
+          Your portfolio is empty. Start trading!
+        </p>
+      </div>
     );
 
   return (
-    <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-2xl shadow-sm overflow-x-auto">
-      <table className="w-full text-left">
-        <thead className="border-b dark:border-gray-700 text-gray-500 dark:text-gray-400 text-sm">
-          <tr>
-            <th className="p-4">Company</th>
-            <th className="p-4">Market Price</th>
-            <th className="p-4">1D Change</th>
-            <th className="p-4">Volume</th>
-            <th className="p-4">52W Range</th>
-            <th className="p-4"></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {stockData.map((stock) => (
-            <tr
-              key={stock.symbol}
-              className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-            >
-              <td className="p-4 font-semibold">{stock.symbol}</td>
-
-              <td className="p-4 font-medium">₹{stock.price}</td>
-
-              <td
-                className={`p-4 font-semibold ${
-                  stock.change >= 0 ? "text-green-500" : "text-red-500"
-                }`}
-              >
-                {stock.change >= 0 ? "+" : ""}
-                {stock.change} ({stock.percent}%)
-              </td>
-
-              <td className="p-4">{stock.volume?.toLocaleString()}</td>
-
-              <td className="p-4">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-400">L</span>
-                  <div className="flex-1 h-1 bg-gray-200 dark:bg-gray-600 rounded">
-                    <div
-                      className="h-1 bg-emerald-500 rounded"
-                      style={{
-                        width: `${Math.random() * 100}%`,
-                      }}
-                    />
-                  </div>
-                  <span className="text-xs text-gray-400">H</span>
-                </div>
-              </td>
-
-              {/* <td className="p-4 flex gap-2">
-                <button className="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded-lg text-sm">
-                  B
-                </button>
-                <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm">
-                  S
-                </button>
-              </td> */}
+    <div className="relative overflow-hidden rounded-2xl border border-white/20 dark:border-white/10 shadow-2xl bg-white/40 dark:bg-white/5 backdrop-blur-xl">
+      <div className="overflow-x-auto">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-widest bg-white/20 dark:bg-black/20">
+              <th className="p-5 font-semibold">Company</th>
+              <th className="p-5 font-semibold">Market Price</th>
+              <th className="p-5 font-semibold">1D Change</th>
+              <th className="p-5 font-semibold hidden md:table-cell">Volume</th>
+              <th className="p-5 font-semibold">Price Range</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody className="divide-y divide-white/10 dark:divide-gray-800/50">
+            {stockData.map((stock) => (
+              <tr
+                key={stock.symbol}
+                className="group hover:bg-emerald-500/5 dark:hover:bg-emerald-500/10 transition-all duration-200"
+              >
+                <td className="p-5">
+                  <span className="font-bold text-gray-800 dark:text-white group-hover:text-emerald-500 transition-colors">
+                    {stock.symbol}
+                  </span>
+                </td>
+
+                <td className="p-5 font-mono text-gray-900 dark:text-gray-100">
+                  ${stock.price?.toFixed(2)}
+                </td>
+
+                <td className="p-5">
+                  <div
+                    className={`inline-flex items-center px-2 py-1 rounded-lg text-xs font-bold ${
+                      stock.change >= 0
+                        ? "bg-green-500/10 text-green-500"
+                        : "bg-red-500/10 text-red-400"
+                    }`}
+                  >
+                    {stock.change >= 0 ? "+" : ""}
+                    {stock.change?.toFixed(2)} ({stock.percent}%)
+                  </div>
+                </td>
+
+                <td className="p-5 text-gray-500 dark:text-gray-400 text-sm hidden md:table-cell font-mono">
+                  {stock.volume?.toLocaleString()}
+                </td>
+
+                <td className="p-5 min-w-[120px]">
+                  <div className="flex flex-col gap-1">
+                    <div className="flex justify-between text-[10px] text-gray-400 uppercase">
+                      <span>${stock.low}</span>
+                      <span>${stock.high}</span>
+                    </div>
+                    <div className="relative w-full h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      {/* Dynamic Progress Bar based on current price relative to high/low */}
+                      <div
+                        className="absolute h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]"
+                        style={{
+                          width: `${((stock.price - stock.low) / (stock.high - stock.low)) * 100}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

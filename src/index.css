@@ -14,3 +14,34 @@
 .animate-scroll {
   animation: scroll 25s linear infinite;
 }
+
+/* In your index.css or tailwind layers */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-150%) rotate(-45deg);
+  }
+  100% {
+    transform: translateX(150%) rotate(-45deg);
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}

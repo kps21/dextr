@@ -31,11 +31,7 @@ function StockDetails() {
       try {
         const data = await getQuote(symbol);
         if (data) {
-          setPriceData({
-            current: data.c,
-            change: data.d,
-            percent: data.dp,
-          });
+          setPriceData({ current: data.c, change: data.d, percent: data.dp });
         }
       } catch (error) {
         console.error("Error fetching price:", error);
@@ -54,11 +50,7 @@ function StockDetails() {
       dispatch(removeStock(symbol));
     } else {
       dispatch(
-        addStock({
-          symbol,
-          quantity: 1,
-          buyPrice: priceData.current || 0,
-        }),
+        addStock({ symbol, quantity: 1, buyPrice: priceData.current || 0 }),
       );
     }
   };
@@ -66,65 +58,83 @@ function StockDetails() {
   const isPositive = priceData.change >= 0;
 
   return (
-    <div className="max-w-5xl mx-auto pb-20 md:pb-10">
-      <div className="flex flex-col md:flex-row md:items-end justify-between p-4 gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-4xl font-black dark:text-white tracking-tighter">
+    <div className="max-w-6xl mx-auto pb-20 md:pb-10 pt-4">
+      {/* --- HEADER SECTION --- */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between p-6 gap-6 bg-white/40 dark:bg-white/5 backdrop-blur-xl rounded-[2.5rem] border border-white/40 dark:border-white/10 shadow-2xl mb-6 mx-4 md:mx-0">
+        <div className="flex-1">
+          <div className="flex items-center gap-3">
+            <h1 className="text-5xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">
               {symbol}
             </h1>
-            <span className="bg-gray-100 dark:bg-gray-800 text-gray-500 text-xs px-2 py-1 rounded">
-              Stock
+            <span className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-black px-3 py-1 rounded-full border border-emerald-500/20 tracking-widest uppercase">
+              Asset Equity
             </span>
           </div>
-          <div className="mt-2 flex items-baseline gap-3">
-            <span className="text-3xl font-bold dark:text-white">
-              {loading ? "---" : `$${priceData.current?.toFixed(2)}`}
-            </span>
-            <span
-              className={`text-sm font-bold ${isPositive ? "text-emerald-500" : "text-red-500"}`}
+
+          <div className="mt-4 flex items-center gap-4">
+            <div className="relative">
+              <span className="text-4xl font-bold dark:text-white">
+                {loading
+                  ? "---"
+                  : `$${priceData.current?.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
+              </span>
+              {!loading && (
+                <span className="absolute -right-3 top-1 flex h-2 w-2">
+                  <span
+                    className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isPositive ? "bg-emerald-400" : "bg-rose-400"}`}
+                  ></span>
+                  <span
+                    className={`relative inline-flex rounded-full h-2 w-2 ${isPositive ? "bg-emerald-500" : "bg-rose-500"}`}
+                  ></span>
+                </span>
+              )}
+            </div>
+            <div
+              className={`flex items-center px-3 py-1 rounded-xl font-bold text-sm ${isPositive ? "bg-emerald-500/10 text-emerald-500" : "bg-rose-500/10 text-rose-500"}`}
             >
-              {isPositive ? "+" : ""}
-              {priceData.change?.toFixed(2)} ({priceData.percent?.toFixed(2)}%)
-            </span>
+              {isPositive ? "▲" : "▼"}{" "}
+              {Math.abs(priceData.percent || 0).toFixed(2)}%
+            </div>
           </div>
         </div>
 
-        <div className="flex gap-2 w-full md:w-auto">
+        {/* --- ACTIONS --- */}
+        <div className="flex gap-3">
           <button
             onClick={() =>
               dispatch(isInWatchlist ? removeWatch(symbol) : addWatch(symbol))
             }
-            className={`flex-1 md:flex-none px-6 py-3 rounded-2xl font-bold transition-all ${
+            className={`px-6 py-4 rounded-2xl font-black text-sm transition-all duration-300 flex items-center gap-2 ${
               isInWatchlist
-                ? "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
-                : "bg-yellow-400 text-yellow-900 shadow-lg shadow-yellow-400/20"
+                ? "bg-white/50 dark:bg-white/10 text-gray-700 dark:text-gray-200 border border-white/50"
+                : "bg-amber-400 text-amber-950 shadow-lg shadow-amber-400/20 hover:scale-105 active:scale-95"
             }`}
           >
             {isInWatchlist ? "★ Saved" : "☆ Watchlist"}
           </button>
           <button
             onClick={handlePortfolioToggle}
-            className={`flex-1 md:flex-none px-6 py-3 rounded-2xl font-bold transition-all text-white shadow-lg ${
+            className={`px-8 py-4 rounded-2xl font-black text-sm transition-all duration-300 text-white shadow-xl hover:scale-105 active:scale-95 ${
               isInPortfolio
-                ? "bg-red-500 shadow-red-500/20"
-                : "bg-emerald-600 shadow-emerald-600/20"
+                ? "bg-rose-500 shadow-rose-500/30"
+                : "bg-emerald-600 shadow-emerald-600/30"
             }`}
           >
-            {isInPortfolio ? "Remove" : "Invest"}
+            {isInPortfolio ? "Exit Position" : "Buy Position"}
           </button>
         </div>
       </div>
 
-      <div className="px-4 mb-4">
-        <div className="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-xl">
+      {/* --- CHART CONTROLS --- */}
+      <div className="px-4 mb-6">
+        <div className="inline-flex bg-white/40 dark:bg-white/5 backdrop-blur-md p-1.5 rounded-2xl border border-white/40 dark:border-white/10 shadow-inner">
           {["1D", "1W", "1M", "1Y"].map((t) => (
             <button
               key={t}
               onClick={() => setTimeframe(t)}
-              className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all ${
+              className={`px-6 py-2.5 text-xs font-black rounded-xl transition-all duration-300 ${
                 timeframe === t
-                  ? "bg-white dark:bg-gray-700 text-emerald-600 dark:text-emerald-400 shadow-sm"
+                  ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/30"
                   : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
               }`}
             >
@@ -134,16 +144,20 @@ function StockDetails() {
         </div>
       </div>
 
-      <div className="px-2 md:px-4">
+      {/* --- CHART --- */}
+      <div className="px-4 transition-all duration-500">
         <CandlestickChart timeframe={timeframe} />
       </div>
 
-      <div className="mt-8 px-4">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-bold dark:text-white">Market News</h3>
-          <div className="h-px flex-1 bg-gray-100 dark:bg-gray-800 mx-4"></div>
+      {/* --- NEWS SECTION --- */}
+      <div className="mt-12 px-4">
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="text-2xl font-black dark:text-white tracking-tight shrink-0">
+            Market Intelligence
+          </h3>
+          <div className="h-px w-full bg-gradient-to-r from-gray-200 dark:from-white/10 to-transparent"></div>
         </div>
-        <div className="bg-white dark:bg-transparent rounded-2xl">
+        <div className="bg-transparent rounded-3xl">
           <NewsFeed symbol={symbol} />
         </div>
       </div>

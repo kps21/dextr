@@ -35,8 +35,17 @@ const amcList = [
 
 function AMCSection() {
   return (
-    <div className="bg-white dark:bg-gray-800  p-6 rounded-2xl shadow-sm dark:text-gray-100">
-      <h2 className="text-lg font-semibold mb-6">Asset Management Companies</h2>
+    <div
+      className="relative p-8 rounded-3xl overflow-hidden
+                    bg-white/30 dark:bg-white/5 backdrop-blur-xl 
+                    border border-white/20 dark:border-white/10 shadow-2xl"
+    >
+      {/* Decorative background glow */}
+      <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 blur-[100px] rounded-full" />
+
+      <h2 className="text-xl font-bold mb-8 text-gray-800 dark:text-white tracking-tight">
+        Asset Management Companies
+      </h2>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
         {amcList.map((amc) => (
@@ -45,14 +54,33 @@ function AMCSection() {
             href={amc.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center p-4 rounded-xl hover:shadow-md transition bg-gray-50 dark:bg-gray-700 hover:bg-white dark:hover:bg-gray-600"
+            className="group relative flex flex-col items-center justify-center p-6 rounded-2xl 
+                       transition-all duration-300 transform hover:-translate-y-2
+                       bg-white/40 dark:bg-white/10 border border-white/40 dark:border-white/5
+                       hover:shadow-2xl hover:shadow-emerald-500/20 hover:border-emerald-500/40"
           >
-            <img
-              src={amc.logo}
-              alt={amc.name}
-              className="h-12 object-contain mb-3"
+            {/* Subtle inner glow on hover */}
+            <div
+              className="absolute inset-0 rounded-2xl bg-gradient-to-br from-emerald-500/0 to-emerald-500/0 
+                            group-hover:from-emerald-500/5 group-hover:to-transparent transition-all"
             />
-            <span className="text-sm text-center font-medium">{amc.name}</span>
+
+            <div className="relative z-10 w-full flex flex-col items-center">
+              <div className="w-16 h-16 mb-4 flex items-center justify-center p-2 rounded-xl bg-white/80 shadow-inner">
+                <img
+                  src={amc.logo}
+                  alt={amc.name}
+                  className="max-h-full max-w-full object-contain filter group-hover:scale-110 transition-transform duration-300"
+                  onError={(e) => {
+                    e.target.src = "https://via.placeholder.com/150?text=AMC";
+                  }}
+                />
+              </div>
+
+              <span className="text-xs text-center font-bold text-gray-700 dark:text-gray-300 group-hover:text-emerald-500 transition-colors uppercase tracking-wider">
+                {amc.name}
+              </span>
+            </div>
           </a>
         ))}
       </div>
