@@ -40,7 +40,6 @@ function AMCSection() {
                     bg-white/30 dark:bg-white/5 backdrop-blur-xl 
                     border border-white/20 dark:border-white/10 shadow-2xl"
     >
-      {/* Decorative background glow */}
       <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 blur-[100px] rounded-full" />
 
       <h2 className="text-xl font-bold mb-8 text-gray-800 dark:text-white tracking-tight">

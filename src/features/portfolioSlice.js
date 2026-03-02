@@ -27,7 +27,6 @@ const load = () => {
   const stored = JSON.parse(localStorage.getItem("portfolio"));
   if (stored && stored.length > 0) return stored;
 
-  // If no data → initialize with default
   localStorage.setItem("portfolio", JSON.stringify(defaultPortfolio));
   return defaultPortfolio;
 };
@@ -35,8 +34,6 @@ const load = () => {
 const save = (data) => {
   localStorage.setItem("portfolio", JSON.stringify(data));
 };
-
-/* ================= ASYNC REFRESH ================= */
 
 export const refreshPortfolio = createAsyncThunk(
   "portfolio/refresh",
@@ -67,7 +64,6 @@ export const refreshPortfolio = createAsyncThunk(
       }),
     );
 
-    // Save refreshed values
     localStorage.setItem("portfolio", JSON.stringify(updated));
 
     return updated;

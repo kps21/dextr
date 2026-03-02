@@ -7,7 +7,6 @@ function CandlestickChart({ timeframe }) {
   const theme = useSelector((state) => state.theme.mode);
   const isDark = theme === "dark";
 
-  // Memoize data to prevent unnecessary chart re-renders
   const series = useMemo(() => generateMockCandles(timeframe), [timeframe]);
 
   const options = {
@@ -68,13 +67,13 @@ function CandlestickChart({ timeframe }) {
       theme: isDark ? "dark" : "light",
       x: { format: "dd MMM yyyy HH:mm" },
       style: { fontSize: "12px" },
-      custom: undefined, // Let Apex handle the glass look of tooltips automatically
+      custom: undefined,
     },
     plotOptions: {
       candlestick: {
         colors: {
-          positive: "#10b981", // Emerald 500
-          negative: "#f43f5e", // Rose 500
+          positive: "#10b981",
+          negative: "#f43f5e",
         },
         wick: { useFillColor: true },
       },
