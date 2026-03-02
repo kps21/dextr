@@ -21,7 +21,7 @@ function MarketNews() {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto p-4 md:p-8">
+    <div className="max-w-7xl mx-auto p-1 md:p-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
         <div>
           <h1 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">
@@ -31,7 +31,6 @@ function MarketNews() {
             Latest updates from global financial markets
           </p>
         </div>
-        {/* Decorative element or secondary filter could go here */}
         <div className="h-1 w-20 bg-emerald-500 rounded-full hidden md:block" />
       </div>
 

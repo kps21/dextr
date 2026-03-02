@@ -58,7 +58,7 @@ function StockDetails() {
   const isPositive = priceData.change >= 0;
 
   return (
-    <div className="max-w-6xl mx-auto pb-20 md:pb-10 pt-4">
+    <div className="max-w-6xl mx-auto pb-20 md:pb-10 pt-1">
       {/* --- HEADER SECTION --- */}
       <div className="flex flex-col md:flex-row md:items-center justify-between p-6 gap-6 bg-white/40 dark:bg-white/5 backdrop-blur-xl rounded-[2.5rem] border border-white/40 dark:border-white/10 shadow-2xl mb-6 mx-4 md:mx-0">
         <div className="flex-1">
