@@ -18,7 +18,6 @@ function Portfolio() {
       const priceData = {};
 
       try {
-        // Parallel fetching for better performance
         await Promise.all(
           items.map(async (stock) => {
             const data = await getQuote(stock.symbol);

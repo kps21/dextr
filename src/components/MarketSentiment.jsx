@@ -1,7 +1,6 @@
 import React from "react";
 
 const MarketSentiment = ({ stocks }) => {
-  // Logic: Calculate ratio of gainers vs losers in your list
   const gainers = stocks.filter((s) => s.change >= 0).length;
   const sentiment = (gainers / stocks.length) * 100;
 

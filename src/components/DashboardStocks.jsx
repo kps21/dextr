@@ -8,7 +8,6 @@ function DashboardStocks() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Using Promise.all for faster concurrent fetching
       const results = await Promise.all(
         items.map(async (stock) => {
           try {
