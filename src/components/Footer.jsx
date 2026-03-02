@@ -195,7 +195,7 @@ function Footer() {
   const currentLinks = CATEGORIES_DATA[activeCategory] || [];
 
   return (
-    <footer className="relative mt-20 transition-all duration-300">
+    <footer className="relative mt-2 transition-all duration-300">
       <div className="absolute inset-0 bg-gray-50/50 dark:bg-[#0a0f1a]/80 backdrop-blur-3xl -z-10" />
 
       <div className="max-w-7xl mx-auto px-6 py-12">

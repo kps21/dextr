@@ -17,7 +17,7 @@ function SearchBar() {
   };
 
   return (
-    <div className="relative mb-8 group">
+    <div className="relative mb-2 group">
       {/* Search Input with Glass Effect */}
       <div className="relative flex items-center">
         <input

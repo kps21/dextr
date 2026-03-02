@@ -7,6 +7,9 @@ import DashboardStocks from "../components/DashboardStocks";
 import AMCSection from "../components/AMCSection";
 import MarketSentiment from "../components/MarketSentiment";
 import { IndicesStrip } from "../components/IndicesStrip";
+import TrendingStocks from "../components/TrendingStocks";
+import MarketNews from "../components/MarketNews";
+import EconomicCalendar from "../components/EconomicCalendar";
 
 const symbols = ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA"];
 
@@ -49,11 +52,11 @@ function Home() {
   }
 
   return (
-    <div className="p-1">
-      <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+    <div>
+      <h1 className="text-2xl font-bold mb-1 text-gray-900 dark:text-gray-100">
         Dashboard
       </h1>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 mb-1">
         <div className="lg:col-span-2">
           <SearchBar />
           <IndicesStrip />
@@ -62,7 +65,9 @@ function Home() {
           <MarketSentiment stocks={stocks} />
         </div>
       </div>
+
       <StockTicker />
+      <TrendingStocks />
 
       {stocks.length === 0 && <p>No data available. Check API key.</p>}
 
@@ -123,13 +128,13 @@ function Home() {
         ))}
       </div>
 
-      <h4 className="text-lg font-semibold mt-6 mb-2 text-gray-900 dark:text-gray-100">
-        Your Portfolio
-      </h4>
       <DashboardStocks />
+      <EconomicCalendar />
+
       <div className="pt-4">
         <AMCSection />
       </div>
+      <MarketNews />
     </div>
   );
 }

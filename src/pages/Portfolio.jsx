@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeStock } from "../features/portfolioSlice";
 import { getQuote } from "../services/finnhubService";
+import InvestmentTasks from "../components/InvestmentTasks";
+import TrendingStocks from "../components/TrendingStocks";
 
 function Portfolio() {
   const dispatch = useDispatch();
@@ -230,6 +232,8 @@ function Portfolio() {
           </div>
         </>
       )}
+      <TrendingStocks />
+      <InvestmentTasks />
     </div>
   );
 }
